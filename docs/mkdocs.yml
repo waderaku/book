@@ -1,0 +1,34 @@
+site_name: 書評まとめ
+theme:
+  name: material
+  language: ja
+  icon:
+    logo: material/school
+    repo: fontawesome/brands/git-alt
+  favicon: favicon.png
+  features:
+    - tabs
+nav:
+  - このサイトについて: index.md
+  - 技術書:
+    - TOP: 010.tech/index.md
+  - ビジネス書: 
+    - TOP: 020.business/index.md
+  - 小説: 
+    - TOP: 030.novel/index.md
+    - 向日葵の咲かない夏: 030.novel/010.himawarinosakanainatsu/index.md
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - footnotes
+  - pymdownx.highlight:
+      linenums: true
+  - pymdownx.superfences
+  - codehilite:
+      noclasses: true
+      pygments_style: colorful
+      linenums: true
+  - toc:
+      permalink: true
+  - attr_list
+copyright: 'Copyright © 2023 - Book Review Ltd. Allrights Reserved.'
