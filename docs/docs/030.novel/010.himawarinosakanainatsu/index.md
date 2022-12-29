@@ -12,6 +12,10 @@
 
 ![](./chart/chart.png)
 
+<!-- prettier-ignore -->
+!!! warning
+    ここ以降は、本編のネタバレを含みます
+
 ## 第一章
 
 -   主人公とその周辺環境の紹介
