@@ -24,9 +24,6 @@
 -   掛け算のテストコードのシンプルな例は以下のようになる
 
     ```python
-    from test_driven_development.muiti_currency_money.money import Dollar
-
-
     def test_multiplication():
         five = Dollar(5)
         five.times(2)
@@ -48,7 +45,7 @@
 
 -   スタート段階では、コンパイルすらできない状態である（Python の場合はランタイムエラー）
 -   第一ステップとしては、テストコードがうまく動くはさておき、まずはコンパイルが通るようにする
-    1. 空の Dollor クラスを作成する
+    1. 空の Dollar クラスを作成する
     1. amount を受け取る空のコンストラクタの定義をする
     1. 空の times メソッドを定義する
     1. amount フィールドを作成する
