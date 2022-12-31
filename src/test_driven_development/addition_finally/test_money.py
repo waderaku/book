@@ -1,4 +1,6 @@
-from src.test_driven_development.the_roof_of_all_evil.money import Money
+from src.test_driven_development.addition_finally.bank import Bank
+from src.test_driven_development.addition_finally.expressioin import Expression
+from src.test_driven_development.addition_finally.money import Money
 
 
 def test_multiplication():
@@ -16,3 +18,10 @@ def test_equality():
 def test_currency():
     assert "USD" == Money.dollar(1).currency()
     assert "CHF" == Money.franc(1).currency()
+
+
+def test_simple_addition():
+    _sum: Expression = Money.dollar(5).plus(Money.dollar(5))
+    bank = Bank()
+    reduced = bank.reduce(_sum, "USD")
+    assert reduced == Money.dollar(10)
