@@ -22,6 +22,8 @@ nav:
         - 第4章 意図を語るテスト: 010.tech/010.test_driven_development/010.the_money_example/004.privacy/index.md
         - 第5章 原則をあえて破るとき: 010.tech/010.test_driven_development/010.the_money_example/005.franc-ly_speaking/index.md
         - 第6章 テスト不足に気づいたら: 010.tech/010.test_driven_development/010.the_money_example/006.equality_for_all_redux/index.md
+        - 第7章 疑念をテストに翻訳する: 010.tech/010.test_driven_development/010.the_money_example/007.apples_and_oranges/index.md
+
 
   - ビジネス書: 
     - TOP: 020.business/index.md
