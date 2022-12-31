@@ -126,3 +126,22 @@
 
 -   ここまでの一連作業で、外部からの Dollar、Franc への依存性を完全に排除することができた
 -   ただし、times メソッドはいまだそれぞれのクラスに存在している。ここについては、次章移行で解決していく
+
+<!-- prettier-ignore -->
+!!! info
+    -   $5 + 10CHF = $10 (レートが 2:1 の場合)
+    -   <s>$5 \* 2 = $10</s>
+    -   <s>amount を private にする</s>
+    -   <s>Dollar の副作用どうする？</s>
+    -   Money の丸め処理どうする？
+    -   <s>\_\_eq\_\_メソッド</s>
+    -   \_\_hash\_\_メソッド
+    -   null との等価性比較
+    -   他のオブジェクトとの等価性比較
+    -   <s>5CHF \* 2 = 10CHF</s>
+    -   Dollar と Franc の重複
+    -   <s>equals の一般化</s>
+    -   times の一般化
+    -   <s>Franc と Dollar を比較する</s>
+    -   通貨の概念
+    -  test_franc_multiplicationを削除する？
