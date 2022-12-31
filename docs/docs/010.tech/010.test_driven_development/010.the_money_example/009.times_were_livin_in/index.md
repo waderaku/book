@@ -98,7 +98,7 @@
             super().__init__(amount)
             self._currency = "CHF"
 
-        def times(self, multiplier: int) -> Franc:
+        def times(self, multiplier: int) -> Money:
             return Franc(self._amount * multiplier, None)
     ```
 
@@ -120,7 +120,7 @@
             super().__init__(amount)
             self._currency = currency
 
-        def times(self, multiplier: int) -> Franc:
+        def times(self, multiplier: int) -> Money:
             return Money.franc(self._amount * multiplier)
     ```
 
@@ -140,7 +140,7 @@
             super().__init__(amount)
             self._currency = currency
 
-        def times(self, multiplier: int) -> Dollar:
+        def times(self, multiplier: int) -> Money:
             return Money.dollar(self._amount * multiplier)
     ```
 
