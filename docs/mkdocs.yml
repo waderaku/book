@@ -28,6 +28,7 @@ nav:
         - 第10章 テストに聞いてみる: 010.tech/010.test_driven_development/010.the_money_example/010.interesting_times/index.md
         - 第11章 不要になったら消す: 010.tech/010.test_driven_development/010.the_money_example/011.the_roof_of_all_evil/index.md
         - 第12章 設計とメタファー: 010.tech/010.test_driven_development/010.the_money_example/012.addition_finally/index.md
+        - 第13章 実装を導くテスト: 010.tech/010.test_driven_development/010.the_money_example/013.make_it/index.md
 
   - ビジネス書: 
     - TOP: 020.business/index.md
