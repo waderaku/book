@@ -4,7 +4,7 @@
 !!! info
     -   $5 + 10CHF = $10 (レートが 2:1 の場合)
     -   <s>$5 + $5 = $10</s>
-    -   <s>$5 + $5がMoneyを返す</s>
+    -   $5 + $5がMoneyを返す
     -   <s>Bank.reduce(Money)</s>
     -   **Moneyを変換して換算を行う**
     -   reduce(Bank, str)
@@ -40,7 +40,7 @@
     ```python
     class Expression(ABC):
         @abstractmethod
-        def reduce(self, bank: Bank, to: str) -> Expression:
+        def reduce(self, bank: Bank, to: str) -> Money:
             raise NotImplementedError()
 
     class Money(Expression):

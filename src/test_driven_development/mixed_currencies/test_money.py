@@ -1,5 +1,6 @@
-from src.test_driven_development.change.bank import Bank
-from src.test_driven_development.change.money import Money, Sum
+from src.test_driven_development.mixed_currencies.bank import Bank
+from src.test_driven_development.mixed_currencies.expressioin import Expression
+from src.test_driven_development.mixed_currencies.money import Money, Sum
 
 
 def test_multiplication():
@@ -55,3 +56,12 @@ def test_reduce_money_different_currency():
 
 def test_identity_rate():
     assert 1 == Bank().rate("USD", "USD")
+
+
+def test_mixed_addition():
+    five_bucks: Expression = Money.dollar(5)
+    ten_francs: Expression = Money.franc(10)
+    bank = Bank()
+    bank.add_rate("CHF", "USD", 2)
+    result = bank.reduce(five_bucks.plus(ten_francs), "USD")
+    assert result == Money.dollar(10)

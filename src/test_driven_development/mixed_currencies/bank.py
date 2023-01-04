@@ -1,6 +1,6 @@
-from src.test_driven_development.change.expressioin import Expression
-from src.test_driven_development.change.money import Money
-from src.test_driven_development.change.pair import Pair
+from src.test_driven_development.mixed_currencies.expressioin import Expression
+from src.test_driven_development.mixed_currencies.money import Money
+from src.test_driven_development.mixed_currencies.pair import Pair
 
 
 class Bank:
