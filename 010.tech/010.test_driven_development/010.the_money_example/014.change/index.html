@@ -13,7 +13,7 @@
     
     
       
-        <title>第9章 歩幅の調整 - 書評まとめ</title>
+        <title>第14章 学習用テストと回帰テスト - 書評まとめ</title>
       
     
     
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#9" class="md-skip">
+        <a href="#14" class="md-skip">
           コンテンツにスキップ
         </a>
       
@@ -95,7 +95,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              第9章 歩幅の調整
+              第14章 学習用テストと回帰テスト
             
           </span>
         </div>
@@ -432,21 +432,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../009.times_were_livin_in/" class="md-nav__link">
         第9章 歩幅の調整
       </a>
-      
     </li>
   
 
@@ -512,11 +502,21 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../014.change/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         第14章 学習用テストと回帰テスト
       </a>
+      
     </li>
   
 
@@ -727,115 +727,35 @@
                   
 
 
-<h1 id="9">第 9 章 歩幅の調整<a class="headerlink" href="#9" title="Permanent link">&para;</a></h1>
+<h1 id="14">第 14 章 学習用テストと回帰テスト<a class="headerlink" href="#14" title="Permanent link">&para;</a></h1>
 <!-- prettier-ignore -->
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <ul>
 <li>$5 + 10CHF = $10 (レートが 2:1 の場合)</li>
-<li><s>$5 * 2 = $10</s></li>
-<li><s>amount を private にする</s></li>
-<li><s>Dollar の副作用どうする？</s></li>
-<li>Money の丸め処理どうする？</li>
-<li><s>__eq__メソッド</s></li>
-<li>__hash__メソッド</li>
-<li>null との等価性比較</li>
-<li>他のオブジェクトとの等価性比較</li>
-<li><s>5CHF * 2 = 10CHF</s></li>
-<li>Dollar と Franc の重複</li>
-<li><s>equals の一般化</s></li>
-<li>times の一般化</li>
-<li><s>Franc と Dollar を比較する</s></li>
-<li><strong>通貨の概念</strong></li>
-<li>test_franc_multiplicationを削除する？</li>
+<li><s>$5 + $5 = $10</s></li>
+<li><s>$5 + $5がMoneyを返す</s></li>
+<li><s>Bank.reduce(Money)</s></li>
+<li><strong>Moneyを変換して換算を行う</strong></li>
+<li>reduce(Bank, str)</li>
 </ul>
 </div>
 <ul>
-<li>Franc と Dollar を消すために、本章では通貨の概念について考える</li>
-<li>まず、どのように通貨をテストするか考える<ul>
-<li>TDD においては、必ずテストから考える事を意識する</li>
-<li>決して実装内容について考えてはいけない！</li>
-</ul>
-</li>
+<li>本章では、通貨の変換機能の実装をしていく</li>
 <li>
-<p>まずは単純に、通貨の概念を文字列で表現することを考える</p>
+<p>まずは、2 フランを 1 ドルに換算出来るようなテストコードを記載する</p>
 <div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">1</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">2</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">3</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_currency</span>():
-    <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;USD&quot;</span> <span style="color: #666666">==</span> Money<span style="color: #666666">.</span>dollar(<span style="color: #666666">1</span>)<span style="color: #666666">.</span>currency()
-    <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;CHF&quot;</span> <span style="color: #666666">==</span> Money<span style="color: #666666">.</span>franc(<span style="color: #666666">1</span>)<span style="color: #666666">.</span>currency()
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">3</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">4</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">5</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_reduce_money_different_currency</span>():
+    bank <span style="color: #666666">=</span> Bank()
+    bank<span style="color: #666666">.</span>add_rate(<span style="color: #BA2121">&quot;CHF&quot;</span>, <span style="color: #BA2121">&quot;USD&quot;</span>, <span style="color: #666666">2</span>)
+    result <span style="color: #666666">=</span> bank<span style="color: #666666">.</span>reduce(Money<span style="color: #666666">.</span>franc(<span style="color: #666666">2</span>), <span style="color: #BA2121">&quot;USD&quot;</span>)
+    <span style="color: #008000; font-weight: bold">assert</span> Money<span style="color: #666666">.</span>dollar(<span style="color: #666666">1</span>) <span style="color: #666666">==</span> result
 </code></pre></div></td></tr></table></div>
 <ul>
-<li>Money クラスに abstruct メソッドを定義し、サブクラスに実装する</li>
-</ul>
-<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 1</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 2</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 3</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 4</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 5</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 6</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 7</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 8</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 9</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">10</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">11</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">12</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">13</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">14</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Money</span>:
-    <span style="color: #AA22FF">@abstractmethod</span>
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">currency</span>(<span style="color: #008000">self</span>) <span style="color: #666666">-&gt;</span> <span style="color: #008000">str</span>:
-        <span style="color: #008000; font-weight: bold">raise</span> <span style="color: #CB3F38; font-weight: bold">NotImplementedError</span>()
-
-
-<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Dollar</span>(Money):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">currency</span>(<span style="color: #008000">self</span>) <span style="color: #666666">-&gt;</span> <span style="color: #008000">str</span>:
-        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #BA2121">&quot;USD&quot;</span>
-
-
-<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Franc</span>(Money):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">currency</span>(<span style="color: #008000">self</span>) <span style="color: #666666">-&gt;</span> <span style="color: #008000">str</span>:
-        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #BA2121">&quot;CHF&quot;</span>
-</code></pre></div></td></tr></table></div>
-<ul>
-<li>続いて、2 つのサブクラスの実装を近づけていって、同じものにする<ul>
-<li>インスタンス変数に通貨名を格納して、それを返すだけの実装に変更する</li>
-</ul>
-</li>
-</ul>
-<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 1</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 2</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 3</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 4</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 5</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 6</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 7</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 8</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 9</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">10</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">11</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">12</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">13</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">14</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">15</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">16</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Dollar</span>(Money):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, amount: <span style="color: #008000">int</span>):
-        <span style="color: #008000">super</span>()<span style="color: #666666">.</span><span style="color: #0000FF">__init__</span>(amount)
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>_currency <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;USD&quot;</span>
-
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">currency</span>(<span style="color: #008000">self</span>) <span style="color: #666666">-&gt;</span> <span style="color: #008000">str</span>:
-        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_currency
-
-
-<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Franc</span>(Money):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, amount: <span style="color: #008000">int</span>):
-        <span style="color: #008000">super</span>()<span style="color: #666666">.</span><span style="color: #0000FF">__init__</span>(amount)
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>_currency <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;CHF&quot;</span>
-
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">currency</span>(<span style="color: #008000">self</span>) <span style="color: #666666">-&gt;</span> <span style="color: #008000">str</span>:
-        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_currency
-</code></pre></div></td></tr></table></div>
-<ul>
-<li>これで currency メソッドが同一になったので、インスタンス変数と currency メソッドを親クラスに引き上げる</li>
+<li>テストを通すため、add_rate のインターフェースを用意し、Money の reduce に仮実装をする</li>
 </ul>
 <div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">1</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">2</span>
@@ -843,19 +763,73 @@
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">4</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">5</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">6</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">7</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Money</span>:
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, amount: <span style="color: #008000">int</span>):
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>_amount <span style="color: #666666">=</span> amount
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>_currency <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;&quot;</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">7</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">8</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Money</span>(Expression):
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">reduce</span>(<span style="color: #008000">self</span>, to: <span style="color: #008000">str</span>) <span style="color: #666666">-&gt;</span> Money:
+        rate <span style="color: #666666">=</span> <span style="color: #666666">2</span> <span style="color: #008000; font-weight: bold">if</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_currency <span style="color: #666666">==</span> <span style="color: #BA2121">&quot;CHF&quot;</span> <span style="color: #AA22FF; font-weight: bold">and</span> to <span style="color: #666666">==</span> <span style="color: #BA2121">&quot;USD&quot;</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #666666">1</span>
+        <span style="color: #008000; font-weight: bold">return</span> Money(<span style="color: #008000">self</span><span style="color: #666666">.</span>_amount <span style="color: #666666">/</span> rate, to)
 
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">currency</span>(<span style="color: #008000">self</span>) <span style="color: #666666">-&gt;</span> <span style="color: #008000">str</span>:
-        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_currency
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Bank</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">add_rate</span>(<span style="color: #008000">self</span>, _from: <span style="color: #008000">str</span>, to: <span style="color: #008000">str</span>, rate: <span style="color: #008000">int</span>):
+        <span style="color: #008000; font-weight: bold">pass</span>
 </code></pre></div></td></tr></table></div>
+</li>
+<li>
+<p>これでテストは通るが、Money が為替レートを知っていることになってしまっている</p>
 <ul>
-<li>更に、文字列"USD"や"CHF"を FactoryMethod に移動すれば、2 つのサブクラスは完全に一致し、共通の実装を導くことができる<ul>
-<li>コンストラクタ呼び出しでエラーが出るので、一先ず None を渡して通す</li>
+<li>この責務は Bank が担うはずである</li>
 </ul>
 </li>
+<li>
+<p>Expression とそのサブクラス の reduce メソッドに Bank インスタンスを渡すように変更し、レート換算は Bank で行うように変更する</p>
+<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 1</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 2</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 3</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 4</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 5</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 6</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 7</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 8</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 9</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">10</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">11</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">12</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">13</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Expression</span>(ABC):
+    <span style="color: #AA22FF">@abstractmethod</span>
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">reduce</span>(<span style="color: #008000">self</span>, bank: Bank, to: <span style="color: #008000">str</span>) <span style="color: #666666">-&gt;</span> Money:
+        <span style="color: #008000; font-weight: bold">raise</span> <span style="color: #CB3F38; font-weight: bold">NotImplementedError</span>()
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Money</span>(Expression):
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">reduce</span>(<span style="color: #008000">self</span>, bank: Bank, to: <span style="color: #008000">str</span>) <span style="color: #666666">-&gt;</span> Money:
+        rate <span style="color: #666666">=</span> bank<span style="color: #666666">.</span>rate(<span style="color: #008000">self</span><span style="color: #666666">.</span>_currency, to)
+        <span style="color: #008000; font-weight: bold">return</span> Money(<span style="color: #008000">self</span><span style="color: #666666">.</span>_amount <span style="color: #666666">/</span> rate, to)
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Bank</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">rate</span>(<span style="color: #008000">self</span>, _from: <span style="color: #008000">str</span>, to: <span style="color: #008000">str</span>) <span style="color: #666666">-&gt;</span> <span style="color: #008000">int</span>:
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #666666">2</span> <span style="color: #008000; font-weight: bold">if</span> _from <span style="color: #666666">==</span> <span style="color: #BA2121">&quot;CHF&quot;</span> <span style="color: #AA22FF; font-weight: bold">and</span> to <span style="color: #666666">==</span> <span style="color: #BA2121">&quot;USD&quot;</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #666666">1</span>
+</code></pre></div></td></tr></table></div>
+</li>
+<li>
+<p>責務の移管は出来たが、レート値がコード上にべた書きされている</p>
+<ul>
+<li>Bank の中でハッシュテーブルを使用し、検索可能な構造にする</li>
+<li>
+<p>ハッシュテーブルは 2 つの通貨名が入ったリストをキーに使いたい</p>
+<ul>
+<li>これがハッシュキーに使用出来るかを確認する</li>
+<li>外部ライブラリ（今回は Python 組み込みのリスト）等の機能を確認する際も、<strong>限定的な仕様であるならばテストを書いてしまえば効率的である</strong></li>
+</ul>
+<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">1</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">2</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">3</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_array_equals</span>():
+    _dict <span style="color: #666666">=</span> {[<span style="color: #BA2121">&quot;abc&quot;</span>]: <span style="color: #666666">1</span>}
+    <span style="color: #008000; font-weight: bold">assert</span> _dict[[<span style="color: #BA2121">&quot;abc&quot;</span>]] <span style="color: #666666">==</span> <span style="color: #666666">1</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>
+<p>テストは通らない。エラーメッセージから、Python の list は hash 化する機能がないことが分かる</p>
+<ul>
+<li>通貨名を管理する Pair クラスを作成する（上記のテストコードはもう不要なため削除する）</li>
 </ul>
 <div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 1</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 2</span>
@@ -868,28 +842,26 @@
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 9</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">10</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">11</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">12</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Money</span>:
-    <span style="color: #AA22FF">@classmethod</span>
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">franc</span>(<span style="color: #008000">cls</span>, amount: <span style="color: #008000">int</span>) <span style="color: #666666">-&gt;</span> Money:
-        <span style="color: #008000; font-weight: bold">return</span> Franc(amount, <span style="color: #008000; font-weight: bold">None</span>)
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">12</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Pair</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, _from: <span style="color: #008000">str</span>, to: <span style="color: #008000">str</span>):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>_from <span style="color: #666666">=</span> _from
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>_to <span style="color: #666666">=</span> to
 
-<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Franc</span>(Money):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, amount: <span style="color: #008000">int</span>, currency: <span style="color: #008000">str</span>):
-        <span style="color: #008000">super</span>()<span style="color: #666666">.</span><span style="color: #0000FF">__init__</span>(amount)
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>_currency <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;CHF&quot;</span>
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__eq__</span>(<span style="color: #008000">self</span>, __o: <span style="color: #008000">object</span>) <span style="color: #666666">-&gt;</span> <span style="color: #008000">bool</span>:
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #008000">isinstance</span>(__o, Pair):
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000; font-weight: bold">False</span>
+        <span style="color: #008000; font-weight: bold">return</span> __o<span style="color: #666666">.</span>_from <span style="color: #666666">==</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_from <span style="color: #AA22FF; font-weight: bold">and</span> __o<span style="color: #666666">.</span>_to <span style="color: #666666">==</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_to
 
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">times</span>(<span style="color: #008000">self</span>, multiplier: <span style="color: #008000">int</span>) <span style="color: #666666">-&gt;</span> Money:
-        <span style="color: #008000; font-weight: bold">return</span> Franc(<span style="color: #008000">self</span><span style="color: #666666">.</span>_amount <span style="color: #666666">*</span> multiplier, <span style="color: #008000; font-weight: bold">None</span>)
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__hash__</span>(<span style="color: #008000">self</span>) <span style="color: #666666">-&gt;</span> <span style="color: #008000">int</span>:
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #666666">0</span>
 </code></pre></div></td></tr></table></div>
 <ul>
-<li>現在の変更とは無関係だが、Franc の times メソッドが FactoryMethod を呼び出していることに気づく<ul>
-<li>教科書的には「今行っている作業を止めないために、修正を待つべき」となる</li>
-<li>しかし、著者は、簡易的な修正割込みなら問題ないとしている</li>
-<li>ただし、割込みを更に割り込むことはしないようにしている</li>
+<li>hash 値が必ず 0 を返すのは非常に良くないが、そこは後ほどまたテストを書くことにする</li>
 </ul>
 </li>
-<li>今回は、times メソッドの内部処理も修正しておく</li>
-<li>最後に、Factory メソッドに currency の知識を組み込み、コンストラクタのパラメータをインスタンス変数に代入するようにすれば、共通化ができる</li>
+<li>
+<p>これでハッシュ管理ができるようになっているので、為替レートを Bank で管理するように変更を加える</p>
+</li>
 </ul>
 <div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 1</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 2</span>
@@ -900,89 +872,48 @@
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 7</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 8</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 9</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">10</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">11</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">12</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Money</span>:
-    <span style="color: #AA22FF">@classmethod</span>
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">franc</span>(<span style="color: #008000">cls</span>, amount: <span style="color: #008000">int</span>) <span style="color: #666666">-&gt;</span> Money:
-        <span style="color: #008000; font-weight: bold">return</span> Franc(amount, <span style="color: #BA2121">&quot;CHF&quot;</span>)
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">10</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Bank</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>_rates <span style="color: #666666">=</span> {}
 
-<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Franc</span>(Money):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, amount: <span style="color: #008000">int</span>, currency: <span style="color: #008000">str</span>):
-        <span style="color: #008000">super</span>()<span style="color: #666666">.</span><span style="color: #0000FF">__init__</span>(amount)
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>_currency <span style="color: #666666">=</span> currency
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">add_rate</span>(<span style="color: #008000">self</span>, _from: <span style="color: #008000">str</span>, to: <span style="color: #008000">str</span>, rate: <span style="color: #008000">int</span>):
+        pair <span style="color: #666666">=</span> Pair(_from, to)
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>_rates[pair] <span style="color: #666666">=</span> rate
 
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">times</span>(<span style="color: #008000">self</span>, multiplier: <span style="color: #008000">int</span>) <span style="color: #666666">-&gt;</span> Money:
-        <span style="color: #008000; font-weight: bold">return</span> Money<span style="color: #666666">.</span>franc(<span style="color: #008000">self</span><span style="color: #666666">.</span>_amount <span style="color: #666666">*</span> multiplier)
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">rate</span>(<span style="color: #008000">self</span>, _from: <span style="color: #008000">str</span>, to: <span style="color: #008000">str</span>) <span style="color: #666666">-&gt;</span> <span style="color: #008000">int</span>:
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_rates[Pair(_from, to)]
 </code></pre></div></td></tr></table></div>
-</li>
-<li>
-<p>本章では、あえて非常に小さい手順に分けて説明をした</p>
 <ul>
-<li>実際に作業をする際には、ここまで細かく分けて作業をする必要はない</li>
-<li>大切なことは、小さなステップを繰り返し、都度テストを行っていく事も可能である、ということだ</li>
+<li>この変更で為替レートの管理が出来るようになったと思ったが、テストでエラーが発生した<ul>
+<li>エラーの箇所は USD から USD への為替レートの変換で起こっている</li>
+<li><strong>予想できていなかったバグであるため、改めて状況を再現する回帰テストを用意する</strong>
+<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">1</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">2</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_identity_rate</span>():
+    <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #666666">1</span> <span style="color: #666666">==</span> Bank()<span style="color: #666666">.</span>rate(<span style="color: #BA2121">&quot;USD&quot;</span>, <span style="color: #BA2121">&quot;USD&quot;</span>)
+</code></pre></div></td></tr></table></div></li>
+<li>予想通りエラーになるが、簡単に修正可能である
+<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">1</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">2</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">3</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">4</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">5</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Bank</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">rate</span>(<span style="color: #008000">self</span>, _from: <span style="color: #008000">str</span>, to: <span style="color: #008000">str</span>) <span style="color: #666666">-&gt;</span> <span style="color: #008000">int</span>:
+        <span style="color: #008000; font-weight: bold">if</span> _from <span style="color: #666666">==</span> to:
+            <span style="color: #008000; font-weight: bold">return</span> <span style="color: #666666">1</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_rates[Pair(_from, to)]
+</code></pre></div></td></tr></table></div></li>
+<li>これで全てのテストが通る</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>
-<p>同じように Dollar についても変更を行う。今度は一度で全ての変更を行う</p>
-<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 1</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 2</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 3</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 4</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 5</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 6</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 7</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 8</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 9</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">10</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">11</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">12</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Money</span>:
-    <span style="color: #AA22FF">@classmethod</span>
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">dollar</span>(<span style="color: #008000">cls</span>, amount: <span style="color: #008000">int</span>) <span style="color: #666666">-&gt;</span> Money:
-        <span style="color: #008000; font-weight: bold">return</span> Dollar(amount, <span style="color: #BA2121">&quot;USD&quot;</span>)
-
-<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Dollar</span>(Money):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, amount: <span style="color: #008000">int</span>, currency: <span style="color: #008000">str</span>):
-        <span style="color: #008000">super</span>()<span style="color: #666666">.</span><span style="color: #0000FF">__init__</span>(amount)
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>_currency <span style="color: #666666">=</span> currency
-
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">times</span>(<span style="color: #008000">self</span>, multiplier: <span style="color: #008000">int</span>) <span style="color: #666666">-&gt;</span> Money:
-        <span style="color: #008000; font-weight: bold">return</span> Money<span style="color: #666666">.</span>dollar(<span style="color: #008000">self</span><span style="color: #666666">.</span>_amount <span style="color: #666666">*</span> multiplier)
-</code></pre></div></td></tr></table></div>
-</li>
-<li>
-<p>TDD を行う際には、常に今回のような微調整を行う</p>
+<p>本章では、仕様確認のテスト（学習用テスト）と、リファクタリング時のミスを再現するテスト（回帰テスト）を紹介した</p>
 <ul>
-<li>小さいステップでは窮屈に感じるならば、歩幅を大きくしていく</li>
-<li>変更の正しさに不安を感じるならば、歩幅を小さくする</li>
+<li>これらを使用することで、より着実にコードを変更していくことができる</li>
 </ul>
 </li>
-<li>
-<p>最後に、2 つのサブクラスのコンストラクタは完全に一致したので、親クラスに引き上げる</p>
-<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 1</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 2</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 3</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 4</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 5</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 6</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 7</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 8</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 9</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">10</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">11</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">12</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Money</span>:
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, amount: <span style="color: #008000">int</span>, currency: <span style="color: #008000">str</span>):
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>_amount <span style="color: #666666">=</span> amount
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>_currency <span style="color: #666666">=</span> currency
-
-<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Dollar</span>(Money):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, amount: <span style="color: #008000">int</span>, currency: <span style="color: #008000">str</span>):
-        <span style="color: #008000">super</span>()<span style="color: #666666">.</span><span style="color: #0000FF">__init__</span>(amount, currency)
-
-<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Franc</span>(Money):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, amount: <span style="color: #008000">int</span>, currency: <span style="color: #008000">str</span>):
-        <span style="color: #008000">super</span>()<span style="color: #666666">.</span><span style="color: #0000FF">__init__</span>(amount, currency)
-</code></pre></div></td></tr></table></div>
+</ul>
 </li>
 </ul>
 
@@ -1005,7 +936,7 @@
     <nav class="md-footer__inner md-grid" aria-label="フッター" >
       
         
-        <a href="../008.makin_objects/" class="md-footer__link md-footer__link--prev" aria-label="前: 第8章 実装を隠す" rel="prev">
+        <a href="../013.make_it/" class="md-footer__link md-footer__link--prev" aria-label="前: 第13章 実装を導くテスト" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -1014,20 +945,20 @@
               <span class="md-footer__direction">
                 前
               </span>
-              第8章 実装を隠す
+              第13章 実装を導くテスト
             </div>
           </div>
         </a>
       
       
         
-        <a href="../010.interesting_times/" class="md-footer__link md-footer__link--next" aria-label="次: 第10章 テストに聞いてみる" rel="next">
+        <a href="../015.mixed_currencies/" class="md-footer__link md-footer__link--next" aria-label="次: 第15章 テスト任せとコンパイラ任せ" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 次
               </span>
-              第10章 テストに聞いてみる
+              第15章 テスト任せとコンパイラ任せ
             </div>
           </div>
           <div class="md-footer__button md-icon">
