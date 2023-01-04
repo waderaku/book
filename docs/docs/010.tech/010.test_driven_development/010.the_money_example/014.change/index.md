@@ -4,7 +4,7 @@
 !!! info
     -   $5 + 10CHF = $10 (レートが 2:1 の場合)
     -   <s>$5 + $5 = $10</s>
-    -   $5 + $5がMoneyを返す
+    -   <s>$5 + $5がMoneyを返す</s>
     -   <s>Bank.reduce(Money)</s>
     -   **Moneyを変換して換算を行う**
     -   reduce(Bank, str)

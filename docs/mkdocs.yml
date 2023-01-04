@@ -31,6 +31,7 @@ nav:
         - 第13章 実装を導くテスト: 010.tech/010.test_driven_development/010.the_money_example/013.make_it/index.md
         - 第14章 学習用テストと回帰テスト: 010.tech/010.test_driven_development/010.the_money_example/014.change/index.md
         - 第15章 テスト任せとコンパイラ任せ: 010.tech/010.test_driven_development/010.the_money_example/015.mixed_currencies/index.md
+        - 第16章 将来の読み手を考えたテスト: 010.tech/010.test_driven_development/010.the_money_example/016.abstraction_finally/index.md
 
   - ビジネス書: 
     - TOP: 020.business/index.md
