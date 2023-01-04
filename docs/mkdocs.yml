@@ -33,6 +33,9 @@ nav:
         - 第15章 テスト任せとコンパイラ任せ: 010.tech/010.test_driven_development/010.the_money_example/015.mixed_currencies/index.md
         - 第16章 将来の読み手を考えたテスト: 010.tech/010.test_driven_development/010.the_money_example/016.abstraction_finally/index.md
         - 第17章 多国通貨の全体ふりかえり: 010.tech/010.test_driven_development/010.the_money_example/017.money_retrospective/index.md
+      - 第Ⅱ部 xUnit: 
+        - TOP: 010.tech/010.test_driven_development/020.the_xUnit_example/index.md
+        - 第18章 xUnit へ向かう小さな一歩: 010.tech/010.test_driven_development/020.the_xUnit_example/018.first_steps_to_xunit/index.md
 
   - ビジネス書: 
     - TOP: 020.business/index.md
