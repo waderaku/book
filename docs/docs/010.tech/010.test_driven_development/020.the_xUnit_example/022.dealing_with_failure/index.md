@@ -59,8 +59,14 @@
                 result.test_failed()
             self.tear_down()
             return result
+
+    print(TestCaseTest("test_template_method").run().summary())
+    print(TestCaseTest("test_result").run().summary())
+    print(TestCaseTest("test_failed_result").run().summary())
+    print(TestCaseTest("test_failed_result_formatting").run().summary())
     ```
 
+    -   ついでに、全てのテスト結果を出力するように変更した
     -   これで前章で作成したテストも通るようになる
         -   しかし、この実装には隠れた問題がある
             -   set_up メソッドで問題が起こっても例外がキャッチされず、テストが止まってしまうのだ

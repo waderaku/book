@@ -40,6 +40,7 @@ nav:
         - 第20章 後片付け: 010.tech/010.test_driven_development/020.the_xUnit_example/020.cleaning_up_after/index.md
         - 第21章 数え上げ: 010.tech/010.test_driven_development/020.the_xUnit_example/021.counting/index.md
         - 第22章 失敗の扱い: 010.tech/010.test_driven_development/020.the_xUnit_example/022.dealing_with_failure/index.md
+        - 第23章 スイートにまとめる: 010.tech/010.test_driven_development/020.the_xUnit_example/023.how_suite_it_is/index.md
 
   - ビジネス書: 
     - TOP: 020.business/index.md
