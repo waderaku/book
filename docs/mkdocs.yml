@@ -37,6 +37,7 @@ nav:
         - TOP: 010.tech/010.test_driven_development/020.the_xUnit_example/index.md
         - 第18章 xUnit へ向かう小さな一歩: 010.tech/010.test_driven_development/020.the_xUnit_example/018.first_steps_to_xunit/index.md
         - 第19章 前準備: 010.tech/010.test_driven_development/020.the_xUnit_example/019.set_the_table/index.md
+        - 第20章 後片付け: 010.tech/010.test_driven_development/020.the_xUnit_example/020.cleaning_up_after/index.md
 
   - ビジネス書: 
     - TOP: 020.business/index.md
