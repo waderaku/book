@@ -39,6 +39,7 @@ nav:
         - 第19章 前準備: 010.tech/010.test_driven_development/020.the_xUnit_example/019.set_the_table/index.md
         - 第20章 後片付け: 010.tech/010.test_driven_development/020.the_xUnit_example/020.cleaning_up_after/index.md
         - 第21章 数え上げ: 010.tech/010.test_driven_development/020.the_xUnit_example/021.counting/index.md
+        - 第22章 失敗の扱い: 010.tech/010.test_driven_development/020.the_xUnit_example/022.dealing_with_failure/index.md
 
   - ビジネス書: 
     - TOP: 020.business/index.md
