@@ -13,7 +13,7 @@
     
     
       
-        <title>第20章 後片付け - 書評まとめ</title>
+        <title>第23章 スイートにまとめる - 書評まとめ</title>
       
     
     
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#20" class="md-skip">
+        <a href="#23" class="md-skip">
           コンテンツにスキップ
         </a>
       
@@ -95,7 +95,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              第20章 後片付け
+              第23章 スイートにまとめる
             
           </span>
         </div>
@@ -633,21 +633,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../020.cleaning_up_after/" class="md-nav__link">
         第20章 後片付け
       </a>
-      
     </li>
   
 
@@ -685,11 +675,21 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../023.how_suite_it_is/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         第23章 スイートにまとめる
       </a>
+      
     </li>
   
 
@@ -947,37 +947,60 @@
                   
 
 
-<h1 id="20">第 20 章 後片付け<a class="headerlink" href="#20" title="Permanent link">&para;</a></h1>
-<ul>
-<li>テストには、set_up メソッドで外部リソースを用意するものもある<ul>
-<li>その場合、テストの独立性を保つためには、外部リソースを終了時に開放しなければならない</li>
-</ul>
-</li>
-<li>上記機能を実現する tear_down メソッドを実装する<ul>
-<li>単純に実装するならフラグを追加するが、既にフラグが複数あり、複雑なフラグ管理が必要になってしまう</li>
-<li>そこで、テスト戦略を変更し、ログを保持する処理方式にする</li>
-</ul>
-</li>
-</ul>
+<h1 id="23">第 23 章 スイートにまとめる<a class="headerlink" href="#23" title="Permanent link">&para;</a></h1>
 <!-- prettier-ignore -->
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <ul>
 <li><s>テストメソッドを呼び出す</s></li>
 <li><s>set_upを呼び出す</s></li>
-<li>tear_downを後で呼び出す</li>
+<li><s>tear_downを後で呼び出す</s></li>
 <li>テストメソッドが失敗したとしてもtear_downを呼び出す</li>
-<li>複数のテストを走らせる</li>
-<li>収集したテスト結果を出力する</li>
-<li><strong>WasRunで文字列をログに記録する</strong></li>
+<li><strong>複数のテストを走らせる</strong></li>
+<li><s>収集したテスト結果を出力する</s></li>
+<li><s>WasRunで文字列をログに記録する</s></li>
+<li><s>失敗したテストを出力する</s></li>
+<li>set_upのエラーをキャッチして出力する</li>
 </ul>
 </div>
 <ul>
+<li>最後に、TestSuite に触れていく<ul>
+<li>現状は全てのテストがファイルの最後に並んでいる汚いコードである<ul>
+<li>テストを実行するメソッド以外のコードが重複していることが分かる</li>
+</ul>
+</li>
+<li>重複は常に悪だが、設計に気づきを与えてくれる<ul>
+<li>仮に一度に一つしかテストが実行されないならば、現状のテストでも問題は発生しなかった</li>
+</ul>
+</li>
+</ul>
+</li>
 <li>
-<p>tear_down を実装する前に、他のフラグもログに変更していく</p>
+<p>TestSuite オブジェクトを作成して、複数のテストをまとめて実行するテストを記載する</p>
+<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">1</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">2</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">3</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">4</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">5</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">6</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">7</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">8</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">9</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestCaseTest</span>(TestCase):
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_suite</span>(<span style="color: #008000">self</span>):
+        suite <span style="color: #666666">=</span> TestSuite()
+        suite<span style="color: #666666">.</span>add(WasRun(<span style="color: #BA2121">&quot;testMethod&quot;</span>))
+        suite<span style="color: #666666">.</span>add(WasRun(<span style="color: #BA2121">&quot;testBrokenMethod&quot;</span>))
+        result <span style="color: #666666">=</span> suite<span style="color: #666666">.</span>run()
+        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;2 run, 1 failed&quot;</span> <span style="color: #666666">==</span> result<span style="color: #666666">.</span>summary()
+
+<span style="color: #008000">print</span>(TestCaseTest(<span style="color: #BA2121">&quot;test_suite&quot;</span>)<span style="color: #666666">.</span>run()<span style="color: #666666">.</span>summary())
+</code></pre></div></td></tr></table></div>
 <ul>
-<li>まずは set_up を変更する</li>
-<li>テストコードでのチェックをログの確認に変更し、set_up メソッドでログを追記する</li>
+<li>テストが通るように、TestSuite クラスを作成する<ul>
+<li>空のリストをコンストラクタで作成し、add メソッドで受け取った test を追加していく単純な実装とする</li>
+<li>ただし、run メソッドでは同じ TestResult インスタンスにテスト回数をカウントしていけるようにする</li>
+</ul>
+</li>
 </ul>
 <div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 1</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 2</span>
@@ -988,60 +1011,27 @@
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 7</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 8</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 9</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">10</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestCaseTest</span>(TestCase):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_set_up</span>(<span style="color: #008000">self</span>):
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>test<span style="color: #666666">.</span>run()
-        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;set_up &quot;</span> <span style="color: #666666">==</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>test<span style="color: #666666">.</span>log
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">10</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">11</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">12</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestSuite</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>tests: <span style="color: #008000">list</span>[TestCase] <span style="color: #666666">=</span> []
 
-<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">WasRun</span>(TestCase):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">set_up</span>(<span style="color: #008000">self</span>):
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>was_run <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">None</span>
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>was_set_up <span style="color: #666666">=</span> <span style="color: #666666">1</span>
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>log <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;set_up &quot;</span>
-</code></pre></div></td></tr></table></div>
-<ul>
-<li>テストが通ったので、was_set_up フラグを削除する事ができる</li>
-<li>同様にして、test_method 時にログを追記するようにし、テストコードを変更する</li>
-</ul>
-<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">1</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">2</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">3</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">4</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">5</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">6</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">7</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">8</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">9</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">WasRun</span>(TestCase):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_method</span>(<span style="color: #008000">self</span>):
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>was_run <span style="color: #666666">=</span> <span style="color: #666666">1</span>
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>log <span style="color: #666666">+=</span> <span style="color: #BA2121">&quot;test_method &quot;</span>
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">add</span>(<span style="color: #008000">self</span>, test: TestCase):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>tests<span style="color: #666666">.</span>append(test)
 
-<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestCaseTest</span>(TestCase):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_runnning</span>(<span style="color: #008000">self</span>):
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>test<span style="color: #666666">.</span>run()
-        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;set_up test_method &quot;</span> <span style="color: #666666">==</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>test<span style="color: #666666">.</span>log
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">run</span>(<span style="color: #008000">self</span>) <span style="color: #666666">-&gt;</span> TestResult:
+        result <span style="color: #666666">=</span> TestResult()
+        <span style="color: #008000; font-weight: bold">for</span> test <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>tests:
+            test<span style="color: #666666">.</span>run(result)
+        <span style="color: #008000; font-weight: bold">return</span> result
 </code></pre></div></td></tr></table></div>
 <ul>
-<li>
-<p>test_method は通ったが、test_set_up で失敗するようになった</p>
-<ul>
-<li>ここまでの変更でログには「set_up test_method 」が残るようになったからである</li>
-<li>テストコードを修正する</li>
+<li>しかし、TestCase は現状 result を受け取るようになっていないためテストは失敗する<ul>
+<li>run メソッドは TestResult インスタンスを受け取るように変更を加える</li>
+<li>単一のテストであろうと、複数のテストであろうと、インターフェースをそろえるために、TestSuite の run メソッドも引数を受け取るようにする</li>
 </ul>
-<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">1</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">2</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">3</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">4</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestCaseTest</span>(TestCase):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_set_up</span>(<span style="color: #008000">self</span>):
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>test<span style="color: #666666">.</span>run()
-        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;set_up test_method &quot;</span> <span style="color: #666666">==</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>test<span style="color: #666666">.</span>log
-</code></pre></div></td></tr></table></div>
 </li>
-<li>
-<p>上記変更によって、test_set_up は 2 つのテスト内容を併せ持つようになった</p>
-<ul>
-<li>test_running を削除し、test_set_up を観点に合う名前(test_template_method)に変更する</li>
-<li>また、不要になった was_run フラグを削除する</li>
 </ul>
 <div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 1</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 2</span>
@@ -1058,60 +1048,65 @@
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">13</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">14</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">15</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">16</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">WasRun</span>(TestCase):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_method</span>(<span style="color: #008000">self</span>):
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>log <span style="color: #666666">+=</span> <span style="color: #BA2121">&quot;test_method &quot;</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">16</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">17</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">18</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">19</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">20</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">21</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">22</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">23</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">24</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestCaseTest</span>(TestCase):
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_suite</span>(<span style="color: #008000">self</span>):
+        suite <span style="color: #666666">=</span> TestSuite()
+        suite<span style="color: #666666">.</span>add(WasRun(<span style="color: #BA2121">&quot;test_method&quot;</span>))
+        suite<span style="color: #666666">.</span>add(WasRun(<span style="color: #BA2121">&quot;test_broken_method&quot;</span>))
+        result <span style="color: #666666">=</span> TestResult()
+        suite<span style="color: #666666">.</span>run(result)
+        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;2 run, 1 failed&quot;</span> <span style="color: #666666">==</span> result<span style="color: #666666">.</span>summary()
 
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">set_up</span>(<span style="color: #008000">self</span>):
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>log <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;set_up &quot;</span>
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestSuite</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">run</span>(<span style="color: #008000">self</span>, result: TestResult):
+        <span style="color: #008000; font-weight: bold">for</span> test <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>tests:
+            test<span style="color: #666666">.</span>run(result)
 
-<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestCaseTest</span>(TestCase):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">set_up</span>(<span style="color: #008000">self</span>):
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>test <span style="color: #666666">=</span> WasRun(<span style="color: #BA2121">&quot;test_method&quot;</span>)
-
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_template_method</span>(<span style="color: #008000">self</span>):
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>test<span style="color: #666666">.</span>run()
-        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;set_up test_method &quot;</span> <span style="color: #666666">==</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>test<span style="color: #666666">.</span>log
-
-TestCaseTest(<span style="color: #BA2121">&quot;test_template_method&quot;</span>)<span style="color: #666666">.</span>run()
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestCase</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">run</span>(<span style="color: #008000">self</span>, result: TestResult):
+        result<span style="color: #666666">.</span>test_started()
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>set_up()
+        <span style="color: #008000; font-weight: bold">try</span>:
+            method <span style="color: #666666">=</span> <span style="color: #008000">getattr</span>(<span style="color: #008000">self</span>, <span style="color: #008000">self</span><span style="color: #666666">.</span>name)
+            method()
+        <span style="color: #008000; font-weight: bold">except</span> <span style="color: #CB3F38; font-weight: bold">Exception</span>:
+            result<span style="color: #666666">.</span>test_failed()
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>tear_down()
 </code></pre></div></td></tr></table></div>
 <ul>
-<li>前章で WasRun クラスのインスタンス化を共通化したが、呼び出し元が一つになったため、test_template_method に戻す</li>
+<li>この変更によって、まとめたテストが実施できるようになった<ul>
+<li>最終行にあるテスト実行コードも、TestSuite を使用するように変更する</li>
+</ul>
+</li>
 </ul>
 <div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">1</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">2</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">3</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">4</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">5</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestCaseTest</span>(TestCase):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_template_method</span>(<span style="color: #008000">self</span>):
-        test <span style="color: #666666">=</span> WasRun(<span style="color: #BA2121">&quot;test_method&quot;</span>)
-        test<span style="color: #666666">.</span>run()
-        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;set_up test_method &quot;</span> <span style="color: #666666">==</span> test<span style="color: #666666">.</span>log
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">5</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">6</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">7</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">8</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">9</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code>suite <span style="color: #666666">=</span> TestSuite()
+suite<span style="color: #666666">.</span>add(TestCaseTest(<span style="color: #BA2121">&quot;test_template_method&quot;</span>))
+suite<span style="color: #666666">.</span>add(TestCaseTest(<span style="color: #BA2121">&quot;test_result&quot;</span>))
+suite<span style="color: #666666">.</span>add(TestCaseTest(<span style="color: #BA2121">&quot;test_failed_result&quot;</span>))
+suite<span style="color: #666666">.</span>add(TestCaseTest(<span style="color: #BA2121">&quot;test_failed_result_formatting&quot;</span>))
+suite<span style="color: #666666">.</span>add(TestCaseTest(<span style="color: #BA2121">&quot;test_suite&quot;</span>))
+result <span style="color: #666666">=</span> TestResult()
+suite<span style="color: #666666">.</span>run(result)
+<span style="color: #008000">print</span>(result<span style="color: #666666">.</span>summary())
 </code></pre></div></td></tr></table></div>
 <ul>
-<li>今回のように、重複が発生したためリファクタリングを行ったものの、直後に元の形に戻さなければならなくなることがしばしばある<ul>
-<li>このような手戻りを嫌って、重複をしばらく放置する事は推奨しない</li>
-<li>思考サイクルを設計に集中できるように、反射的にリファクタリングをした方が結果的に良くなることが多い</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>これで tear_down のテストコードを実装することができる</p>
-<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">1</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">2</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">3</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">4</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">5</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestCaseTest</span>(TestCase):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_template_method</span>(<span style="color: #008000">self</span>):
-        test <span style="color: #666666">=</span> WasRun(<span style="color: #BA2121">&quot;test_method&quot;</span>)
-        test<span style="color: #666666">.</span>run()
-        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;set_up test_method tear_down &quot;</span> <span style="color: #666666">==</span> test<span style="color: #666666">.</span>log
-</code></pre></div></td></tr></table></div>
-<ul>
-<li>当然テストは失敗する。set_up や test_method と同じように、tear_down の機能を実装する</li>
+<li>3 つのテストで失敗する。これは、引数なしの run メソッドを使用しているテストがあるからである</li>
 </ul>
 <div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 1</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 2</span>
@@ -1122,32 +1117,118 @@ TestCaseTest(<span style="color: #BA2121">&quot;test_template_method&quot;</span
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 7</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 8</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 9</span>
-<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">10</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestCase</span>:
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">run</span>(<span style="color: #008000">self</span>):
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>set_up()
-        method <span style="color: #666666">=</span> <span style="color: #008000">getattr</span>(<span style="color: #008000">self</span>, <span style="color: #008000">self</span><span style="color: #666666">.</span>name)
-        method()
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>tear_down()
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">10</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">11</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">12</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">13</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">14</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">15</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">16</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">17</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">18</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestCaseTest</span>(TestCase):
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_template_method</span>(<span style="color: #008000">self</span>):
+        test <span style="color: #666666">=</span> WasRun(<span style="color: #BA2121">&quot;test_method&quot;</span>)
+        result <span style="color: #666666">=</span> TestResult()
+        test<span style="color: #666666">.</span>run(result)
+        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;set_up test_method tear_down &quot;</span> <span style="color: #666666">==</span> test<span style="color: #666666">.</span>log
 
-<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">WasRun</span>(TestCase):
-    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">tear_down</span>(<span style="color: #008000">self</span>):
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>log <span style="color: #666666">+=</span> <span style="color: #BA2121">&quot;tear_down &quot;</span>
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_result</span>(<span style="color: #008000">self</span>):
+        test <span style="color: #666666">=</span> WasRun(<span style="color: #BA2121">&quot;test_method&quot;</span>)
+        result <span style="color: #666666">=</span> TestResult()
+        test<span style="color: #666666">.</span>run(result)
+        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;1 run, 0 failed&quot;</span> <span style="color: #666666">==</span> result<span style="color: #666666">.</span>summary()
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_failed_result</span>(<span style="color: #008000">self</span>):
+        test <span style="color: #666666">=</span> WasRun(<span style="color: #BA2121">&quot;test_broken_method&quot;</span>)
+        result <span style="color: #666666">=</span> TestResult()
+        test<span style="color: #666666">.</span>run(result)
+        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;1 run, 1 failed&quot;</span> <span style="color: #666666">==</span> result<span style="color: #666666">.</span>summary()
 </code></pre></div></td></tr></table></div>
 <ul>
-<li>しかし、テストは失敗する。エラーの箇所は WasRun ではなく、TestCaseTest からエラーが出ている<ul>
-<li>TestCase クラスに tear_down メソッドがない事が原因である<ul>
-<li>現在開発しているテスティングフレームワークが機能して原因究明ができた</li>
+<li>以上にて、全てのテストが通る(「5 run, 0 failed」と出力される)</li>
+<li>重複排除として、各々のテストメソッドで TestResult を生成している処理を set_up に寄せる</li>
 </ul>
-</li>
-<li>修正自体は TestCase に空の tear_down メソッドを追加すればよい</li>
-</ul>
-</li>
-</ul>
+<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 1</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 2</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 3</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 4</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 5</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 6</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 7</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 8</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 9</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">10</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">11</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">12</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">13</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">14</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">15</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">16</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">17</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">18</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">19</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">20</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">21</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">22</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">23</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">24</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">25</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">26</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">27</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">28</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">29</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">30</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestCaseTest</span>(TestCase):
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">set_up</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>result <span style="color: #666666">=</span> TestResult()
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_template_method</span>(<span style="color: #008000">self</span>):
+        test <span style="color: #666666">=</span> WasRun(<span style="color: #BA2121">&quot;test_method&quot;</span>)
+        test<span style="color: #666666">.</span>run(<span style="color: #008000">self</span><span style="color: #666666">.</span>result)
+        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;set_up test_method tear_down &quot;</span> <span style="color: #666666">==</span> test<span style="color: #666666">.</span>log
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_result</span>(<span style="color: #008000">self</span>):
+        test <span style="color: #666666">=</span> WasRun(<span style="color: #BA2121">&quot;test_method&quot;</span>)
+        test<span style="color: #666666">.</span>run(<span style="color: #008000">self</span><span style="color: #666666">.</span>result)
+        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;1 run, 0 failed&quot;</span> <span style="color: #666666">==</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>result<span style="color: #666666">.</span>summary()
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_failed_result</span>(<span style="color: #008000">self</span>):
+        test <span style="color: #666666">=</span> WasRun(<span style="color: #BA2121">&quot;test_broken_method&quot;</span>)
+        test<span style="color: #666666">.</span>run(<span style="color: #008000">self</span><span style="color: #666666">.</span>result)
+        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;1 run, 1 failed&quot;</span> <span style="color: #666666">==</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>result<span style="color: #666666">.</span>summary()
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_failed_result_formatting</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>result<span style="color: #666666">.</span>test_started()
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>result<span style="color: #666666">.</span>test_failed()
+        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;1 run, 1 failed&quot;</span> <span style="color: #666666">==</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>result<span style="color: #666666">.</span>summary()
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_suite</span>(<span style="color: #008000">self</span>):
+        suite <span style="color: #666666">=</span> TestSuite()
+        suite<span style="color: #666666">.</span>add(WasRun(<span style="color: #BA2121">&quot;test_method&quot;</span>))
+        suite<span style="color: #666666">.</span>add(WasRun(<span style="color: #BA2121">&quot;test_broken_method&quot;</span>))
+        suite<span style="color: #666666">.</span>run(<span style="color: #008000">self</span><span style="color: #666666">.</span>result)
+        <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;2 run, 1 failed&quot;</span> <span style="color: #666666">==</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>result<span style="color: #666666">.</span>summary()
+</code></pre></div></td></tr></table></div>
 </li>
 <li>
-<p>次章では、テスト結果のレポート機能に着手する</p>
+<p>第 Ⅱ 部の実装としては、以上とする。TODO がいくつか残っているが、そこは読者への宿題とする</p>
 </li>
 </ul>
+<!-- prettier-ignore -->
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<ul>
+<li><s>テストメソッドを呼び出す</s></li>
+<li><s>set_upを呼び出す</s></li>
+<li><s>tear_downを後で呼び出す</s></li>
+<li>テストメソッドが失敗したとしてもtear_downを呼び出す</li>
+<li><s>複数のテストを走らせる</s></li>
+<li><s>収集したテスト結果を出力する</s></li>
+<li><s>WasRunで文字列をログに記録する</s></li>
+<li><s>失敗したテストを出力する</s></li>
+<li>set_upのエラーをキャッチして出力する</li>
+<li>TestCaseクラスからTestSuiteを作る</li>
+</ul>
+</div>
 
 
 
@@ -1168,7 +1249,7 @@ TestCaseTest(<span style="color: #BA2121">&quot;test_template_method&quot;</span
     <nav class="md-footer__inner md-grid" aria-label="フッター" >
       
         
-        <a href="../019.set_the_table/" class="md-footer__link md-footer__link--prev" aria-label="前: 第19章 前準備" rel="prev">
+        <a href="../022.dealing_with_failure/" class="md-footer__link md-footer__link--prev" aria-label="前: 第22章 失敗の扱い" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -1177,20 +1258,20 @@ TestCaseTest(<span style="color: #BA2121">&quot;test_template_method&quot;</span
               <span class="md-footer__direction">
                 前
               </span>
-              第19章 前準備
+              第22章 失敗の扱い
             </div>
           </div>
         </a>
       
       
         
-        <a href="../021.counting/" class="md-footer__link md-footer__link--next" aria-label="次: 第21章 数え上げ" rel="next">
+        <a href="../024.xunit_retrospective/" class="md-footer__link md-footer__link--next" aria-label="次: 第24章 xUnitの全体ふりかえり" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 次
               </span>
-              第21章 数え上げ
+              第24章 xUnitの全体ふりかえり
             </div>
           </div>
           <div class="md-footer__button md-icon">
