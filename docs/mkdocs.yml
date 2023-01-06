@@ -45,6 +45,7 @@ nav:
       - 第Ⅲ部 テスト駆動開発のパターン: 
         - TOP: 010.tech/010.test_driven_development/030.patterns_for_test_driven_development/index.md
         - 第25章 テスト駆動開発のパターン: 010.tech/010.test_driven_development/030.patterns_for_test_driven_development/025.test_driven_development_patterns/index.md
+        - 第26章 レッドバーのパターン: 010.tech/010.test_driven_development/030.patterns_for_test_driven_development/026.red_bar_patterns/index.md
 
   - ビジネス書: 
     - TOP: 020.business/index.md
