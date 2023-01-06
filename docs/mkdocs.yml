@@ -42,6 +42,9 @@ nav:
         - 第22章 失敗の扱い: 010.tech/010.test_driven_development/020.the_xUnit_example/022.dealing_with_failure/index.md
         - 第23章 スイートにまとめる: 010.tech/010.test_driven_development/020.the_xUnit_example/023.how_suite_it_is/index.md
         - 第24章 xUnitの全体ふりかえり: 010.tech/010.test_driven_development/020.the_xUnit_example/024.xunit_retrospective/index.md
+      - 第Ⅲ部 テスト駆動開発のパターン: 
+        - TOP: 010.tech/010.test_driven_development/030.patterns_for_test_driven_development/index.md
+        - 第25章 テスト駆動開発のパターン: 010.tech/010.test_driven_development/030.patterns_for_test_driven_development/025.test_driven_development_patterns/index.md
 
   - ビジネス書: 
     - TOP: 020.business/index.md
