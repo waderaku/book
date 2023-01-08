@@ -1,0 +1,1907 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../../favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>第31章 リファクタリング - 書評まとめ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.2505c338.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="None" data-md-color-accent="None">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#31" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../../../.." title="書評まとめ" class="md-header__button md-logo" aria-label="書評まとめ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3 1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            書評まとめ
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第31章 リファクタリング
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="書評まとめ" class="md-nav__button md-logo" aria-label="書評まとめ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3 1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82Z"/></svg>
+
+    </a>
+    書評まとめ
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        このサイトについて
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          技術書
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="技術書" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          技術書
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        TOP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          テスト駆動開発
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="テスト駆動開発" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          テスト駆動開発
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        TOP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_2" type="checkbox" id="__nav_2_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2_2">
+          第Ⅰ部 多国通貨
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第Ⅰ部 多国通貨" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          第Ⅰ部 多国通貨
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/" class="md-nav__link">
+        TOP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/001.muiti_currency_money/" class="md-nav__link">
+        第1章 仮実装
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/002.degenerate_objects/" class="md-nav__link">
+        第2章 明白な実装
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/003.equality_for_all/" class="md-nav__link">
+        第3章 三角測量
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/004.privacy/" class="md-nav__link">
+        第4章 意図を語るテスト
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/005.franc-ly_speaking/" class="md-nav__link">
+        第5章 原則をあえて破るとき
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/006.equality_for_all_redux/" class="md-nav__link">
+        第6章 テスト不足に気づいたら
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/007.apples_and_oranges/" class="md-nav__link">
+        第7章 疑念をテストに翻訳する
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/008.makin_objects/" class="md-nav__link">
+        第8章 実装を隠す
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/009.times_were_livin_in/" class="md-nav__link">
+        第9章 歩幅の調整
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/010.interesting_times/" class="md-nav__link">
+        第10章 テストに聞いてみる
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/011.the_roof_of_all_evil/" class="md-nav__link">
+        第11章 不要になったら消す
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/012.addition_finally/" class="md-nav__link">
+        第12章 設計とメタファー
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/013.make_it/" class="md-nav__link">
+        第13章 実装を導くテスト
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/014.change/" class="md-nav__link">
+        第14章 学習用テストと回帰テスト
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/015.mixed_currencies/" class="md-nav__link">
+        第15章 テスト任せとコンパイラ任せ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/016.abstraction_finally/" class="md-nav__link">
+        第16章 将来の読み手を考えたテスト
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../010.the_money_example/017.money_retrospective/" class="md-nav__link">
+        第17章 多国通貨の全体ふりかえり
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_3" type="checkbox" id="__nav_2_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2_3">
+          第Ⅱ部 xUnit
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第Ⅱ部 xUnit" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          第Ⅱ部 xUnit
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../020.the_xUnit_example/" class="md-nav__link">
+        TOP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../020.the_xUnit_example/018.first_steps_to_xunit/" class="md-nav__link">
+        第18章 xUnit へ向かう小さな一歩
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../020.the_xUnit_example/019.set_the_table/" class="md-nav__link">
+        第19章 前準備
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../020.the_xUnit_example/020.cleaning_up_after/" class="md-nav__link">
+        第20章 後片付け
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../020.the_xUnit_example/021.counting/" class="md-nav__link">
+        第21章 数え上げ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../020.the_xUnit_example/022.dealing_with_failure/" class="md-nav__link">
+        第22章 失敗の扱い
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../020.the_xUnit_example/023.how_suite_it_is/" class="md-nav__link">
+        第23章 スイートにまとめる
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../020.the_xUnit_example/024.xunit_retrospective/" class="md-nav__link">
+        第24章 xUnitの全体ふりかえり
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2_4" type="checkbox" id="__nav_2_2_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2_4">
+          第Ⅲ部 テスト駆動開発のパターン
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第Ⅲ部 テスト駆動開発のパターン" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          第Ⅲ部 テスト駆動開発のパターン
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        TOP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../025.test_driven_development_patterns/" class="md-nav__link">
+        第25章 テスト駆動開発のパターン
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../026.red_bar_patterns/" class="md-nav__link">
+        第26章 レッドバーのパターン
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../027.testing_patterns/" class="md-nav__link">
+        第27章 テスティングフレームワーク
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../028.green_bar_patterns/" class="md-nav__link">
+        第28章 グリーンバーのパターン
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../029.xunit_patterns/" class="md-nav__link">
+        第29章 xUnitのパターン
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../030.design_patterns/" class="md-nav__link">
+        第30章 デザインパターン
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          第31章 リファクタリング
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        第31章 リファクタリング
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    差異をなくす
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    変更の分離
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    データ構造の変更
+  </a>
+  
+    <nav class="md-nav" aria-label="データ構造の変更">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    メソッドの抽出
+  </a>
+  
+    <nav class="md-nav" aria-label="メソッドの抽出">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    メソッドのインライン化
+  </a>
+  
+    <nav class="md-nav" aria-label="メソッドのインライン化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    インターフェースの抽出
+  </a>
+  
+    <nav class="md-nav" aria-label="インターフェースの抽出">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    メソッドの移動
+  </a>
+  
+    <nav class="md-nav" aria-label="メソッドの移動">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    メソッドオブジェクト
+  </a>
+  
+    <nav class="md-nav" aria-label="メソッドオブジェクト">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    パラメータの追加
+  </a>
+  
+    <nav class="md-nav" aria-label="パラメータの追加">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    メソッドからコンストラクタへのパラメータの移動
+  </a>
+  
+    <nav class="md-nav" aria-label="メソッドからコンストラクタへのパラメータの移動">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../032.mastering_tdd/" class="md-nav__link">
+        第32章 TDDを身につける
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          ビジネス書
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ビジネス書" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          ビジネス書
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../020.business/" class="md-nav__link">
+        TOP
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          小説
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="小説" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          小説
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../030.novel/" class="md-nav__link">
+        TOP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../030.novel/010.himawarinosakanainatsu/" class="md-nav__link">
+        向日葵の咲かない夏
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    差異をなくす
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    変更の分離
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    データ構造の変更
+  </a>
+  
+    <nav class="md-nav" aria-label="データ構造の変更">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    メソッドの抽出
+  </a>
+  
+    <nav class="md-nav" aria-label="メソッドの抽出">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    メソッドのインライン化
+  </a>
+  
+    <nav class="md-nav" aria-label="メソッドのインライン化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    インターフェースの抽出
+  </a>
+  
+    <nav class="md-nav" aria-label="インターフェースの抽出">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    メソッドの移動
+  </a>
+  
+    <nav class="md-nav" aria-label="メソッドの移動">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    メソッドオブジェクト
+  </a>
+  
+    <nav class="md-nav" aria-label="メソッドオブジェクト">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    パラメータの追加
+  </a>
+  
+    <nav class="md-nav" aria-label="パラメータの追加">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    メソッドからコンストラクタへのパラメータの移動
+  </a>
+  
+    <nav class="md-nav" aria-label="メソッドからコンストラクタへのパラメータの移動">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    理由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="31">第 31 章 リファクタリング<a class="headerlink" href="#31" title="Permanent link">&para;</a></h1>
+<ul>
+<li>一般的なリファクタリングは、プログラムの意味を変えることは許されない</li>
+<li>しかし、TDD においては、事情が異なる<ul>
+<li>テストが通りさえすれば、どのような変更も許される</li>
+<li>そもそもべた書きの値を変数に書き換えていく作業は、一般にリファクタリングとは呼べない</li>
+</ul>
+</li>
+<li>そのため、機能を担保し続けるには、十分なテストを用意し、網羅性に守られたリファクタリングを行わなければならない</li>
+</ul>
+<h2 id="_1">差異をなくす<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>よく似ているコードから重複を排除する場合、それぞれのコードを完全に一致させて、共通関数とする</li>
+<li>対象が単純でなければ、コードを完全に一致させるステップを省略するのは問題である<ul>
+<li>その共通関数への変更の設計に問題がある可能性が高い</li>
+</ul>
+</li>
+<li>時には、ゴールから考えて差異を減らしていくアプローチが必要となることがある<ul>
+<li>例えば、複数のサブクラスを削除して親クラスに昇華していく事を例に考える<ul>
+<li>最も小さい最終ステップは、空になったサブクラスの削除となる</li>
+<li>サブクラスのメソッドを親クラスのメソッドと完全に一致させて消していく</li>
+<li>サブクラスから 1 つずつメソッドを減らしていって、空になるところまで来たら、サブクラスの参照を親クラスの参照に置き換えていく</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="_2">変更の分離<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li>複数の部分から構成されるメソッドあるいはオブジェクトを変更する際には、まず変更すべき部分を分離独立させると良い<ul>
+<li>変更箇所を分離独立させることで、対象となる部分だけに集中して取り組むことができる</li>
+</ul>
+</li>
+<li>変更を分離独立させるリファクタリングには、以下のようなものがある<ul>
+<li>メソッドの抽出</li>
+<li>オブジェクトの抽出</li>
+<li>メソッドオブジェクト</li>
+</ul>
+</li>
+</ul>
+<h2 id="_3">データ構造の変更<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li>データの持ち方を変える際には、一度にデータ構造を変更するのではなく、データを一時的に複製すると良い</li>
+</ul>
+<h3 id="_4">方法<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>データ構造の変更方法には 2 種類ある<ul>
+<li>1 つ目は、内部構造を書き換えた後、外部インターフェースを変更するやり方である<ol>
+<li>新構造のためのインスタンス変数を定義する</li>
+<li>旧構造でデータが設定されている部分をその変数に置き換える</li>
+<li>旧構造のデータを使っている部分をその変数に置き換える</li>
+<li>旧構造のコードを消す</li>
+<li>外部インターフェースに新構造を反映する</li>
+</ol>
+</li>
+<li>2 つ目は、ＡＰＩ側から変更を行う場合である<ol>
+<li>新構造のパラメータを追加する</li>
+<li>新構造のパラメータを内部で旧構造に変換する</li>
+<li>旧構造のパラメータを削除する</li>
+<li>旧構造を使っている部分を新構造に置き換えていく</li>
+<li>旧構造のコードを削除する</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="_5">理由<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>1 つ目の方法を使用する事例を扱う</li>
+<li>「一から多へ」の変更を行う際に、常にデータをどうするかに悩まされる</li>
+<li>
+<p>1 つのテストだけを扱える TestSuite を、多数のテストを扱えるように変更する場面を考える</p>
+<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 1</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 2</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 3</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 4</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 5</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 6</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 7</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 8</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 9</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">10</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">11</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_suite</span>(<span style="color: #008000">self</span>):
+    suite <span style="color: #666666">=</span> TestSuite()
+    suite<span style="color: #666666">.</span>add(WasRun(<span style="color: #BA2121">&quot;test_method&quot;</span>))
+    suite<span style="color: #666666">.</span>run(<span style="color: #008000">self</span><span style="color: #666666">.</span>result)
+    <span style="color: #008000; font-weight: bold">assert</span> <span style="color: #BA2121">&quot;1 run, 0 failed&quot;</span> <span style="color: #666666">==</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>result<span style="color: #666666">.</span>summary()
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestSuite</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">add</span>(<span style="color: #008000">self</span>, test):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>test <span style="color: #666666">=</span> test
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">run</span>(<span style="color: #008000">self</span>, result):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>test<span style="color: #666666">.</span>run(result)
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>ここからデータの複製を行う。まずはインスタンス変数を宣言する</li>
+</ul>
+<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">1</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">2</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">3</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">4</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">5</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">6</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">7</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestSuite</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>tests <span style="color: #666666">=</span> []
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">add</span>(<span style="color: #008000">self</span>, test):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>test <span style="color: #666666">=</span> test
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">run</span>(<span style="color: #008000">self</span>, result):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>test<span style="color: #666666">.</span>run()
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>続いて、この配列を使用するように各メソッドに追記する</li>
+</ul>
+<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">1</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">2</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">3</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">4</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">5</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">6</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">7</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">8</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">9</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestSuite</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>tests <span style="color: #666666">=</span> []
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">add</span>(<span style="color: #008000">self</span>, test):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>test <span style="color: #666666">=</span> test
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>tests<span style="color: #666666">.</span>append(test)
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">run</span>(<span style="color: #008000">self</span>, result):
+        <span style="color: #008000; font-weight: bold">for</span> test <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>tests:
+            test<span style="color: #666666">.</span>run(result)
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>これで元の変数は不要になったため、削除することができる</li>
+</ul>
+<div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">1</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">2</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">3</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">4</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">5</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">6</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">7</span>
+<span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;">8</span></pre></div></td><td class="code"><div><pre style="line-height: 125%;"><span></span><code><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TestSuite</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>tests <span style="color: #666666">=</span> []
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">add</span>(<span style="color: #008000">self</span>, test):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>tests<span style="color: #666666">.</span>append(test)
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">run</span>(<span style="color: #008000">self</span>, result):
+        <span style="color: #008000; font-weight: bold">for</span> test <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>tests:
+            test<span style="color: #666666">.</span>run(result)
+</code></pre></div></td></tr></table></div>
+</li>
+<li>
+<p>この様にステップを踏んでいけば、テストを動かして現在のプログラムを壊さずに拡張ができる</p>
+</li>
+</ul>
+<h2 id="_6">メソッドの抽出<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<ul>
+<li>込み入った長いメソッドを読みやすくするためには、メソッドの一部分を別のメソッドに分離し、そのメソッドを呼び出すようにするのが良い</li>
+</ul>
+<h3 id="_7">方法<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>メソッドの抽出は厳密には複雑でアトミックなリファクタリングである</li>
+<li>
+<p>本節では代表的な手順を挙げる</p>
+<ol>
+<li>メソッドの中から新しいメソッドとして切り出す意味のある部分を探す</li>
+<li>抽出する範囲の外で一時変数への代入が行われていないことを確認する</li>
+<li>旧メソッドから該当範囲のコードをコピーし、コンパイルする</li>
+<li>旧メソッドの一時変数やパラメータの中で新メソッドから使うものを、新メソッドのパラメータに追加する</li>
+<li>旧メソッドの中から新メソッドを呼び出す</li>
+</ol>
+</li>
+</ul>
+<h3 id="_8">理由<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li>メソッドの抽出を行うのは、込み入ったコードを理解したいときである</li>
+<li>2 つのメソッドの一部が同じ内容で、その他の部分が異なる場合にも、メソッドの抽出を行ってその重複を除去するとよい</li>
+<li>メソッドを小さいメソッドに分解する行為は、時にやりすぎを招きかねない<ul>
+<li>設計に行き詰った時には、抽出したメソッドを「メソッドのインライン化」で元のメソッドに戻すことも考えるべきである</li>
+</ul>
+</li>
+</ul>
+<h2 id="_9">メソッドのインライン化<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<ul>
+<li>様々な箇所に散らばった制御フローをシンプルにするには、メソッド呼び出しをその内部の処理に置き換えると良い</li>
+</ul>
+<h3 id="_10">方法<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<ol>
+<li>対象のメソッドをコピーする</li>
+<li>メソッド呼び出し部分にそのメソッド本文をペーストする</li>
+<li>仮引数を実引数に置き換える</li>
+</ol>
+<h3 id="_11">理由<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<ul>
+<li>メソッドのインライン化を使えば、制御フローの様々な変更を試すことができる</li>
+<li>様々な変更を行っていくと、抽象的な概念の集まりとなり、メッセージの受送信を追わなければならなくなる<ul>
+<li>その場合は、メソッドのインライン化を用いると良い</li>
+</ul>
+</li>
+</ul>
+<h2 id="_12">インターフェースの抽出<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<ul>
+<li>ある処理の実装をもう 1 種類作るときには、インターフェースを作り、共通の処理をくくり出すと良い</li>
+</ul>
+<h3 id="_13">方法<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<ol>
+<li>インターフェースを宣言する。既存クラスの名前を使用したくなった場合、先にクラスの改名を行う</li>
+<li>そのインターフェースを既存クラスが実装するようにする</li>
+<li>必要なメソッドをインターフェースに加え、クラスの方では必要に応じてメソッドの可視性を上げる</li>
+<li>コードの中で宣言される型を可能な限りクラスからインターフェースに書き換える</li>
+</ol>
+<h3 id="_14">理由<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<ul>
+<li>インターフェースの抽出が必要になるとき、多くの場合で既に実装クラスは存在している</li>
+<li>Crash Test Dummy パターンや Mock Object パターンを導入するために、インターフェースを抽出することもある</li>
+<li>インターフェースの命名には、その対象を深く理解している必要がある<ul>
+<li>File のインターフェースを IFile 等と名付けるのはバッドプラクティスである</li>
+</ul>
+</li>
+</ul>
+<h2 id="_15">メソッドの移動<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h2>
+<ul>
+<li>メソッドをふさわしい場所に移動する際には、あるべきところにメソッドを加え、それを呼び出すようにすると良い</li>
+</ul>
+<h3 id="_16">方法<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<ol>
+<li>メソッドをコピーする</li>
+<li>移動先クラスにペーストし、名前を整え、コンパイルする</li>
+<li>移動元のオブジェクトがメソッド内で参照されている場合、移動元オブジェクトをメソッドのパラメータに加える。移動元オブジェクトの変数がメソッド内で参照されている場合も、それをパラメータに追加する</li>
+<li>移動元クラスのメソッドの中身を新しいメソッドの呼び出しに置き換える</li>
+</ol>
+<h3 id="_17">理由<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h3>
+<ul>
+<li>例えば、あるメソッドが一つのオブジェクトに対して何度もメッセージを送っている（メソッドを呼び出している）場合、一連の処理を 1 つにまとめてオブジェクト内のメソッドにすると良い</li>
+<li>「メソッドの移動」リファクタリングの長所を 3 つ挙げる<ul>
+<li>対象コードの意味を深くとらえなくとも、判断は簡単である。1 つのオブジェクトに対して 2 つ以上の呼び出しがあった場合は、「メソッドの移動」を考える</li>
+<li>素早く安全に行う手順が存在する</li>
+<li>目を見張るような効果を得られる可能性が高い</li>
+</ul>
+</li>
+</ul>
+<h2 id="_18">メソッドオブジェクト<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h2>
+<ul>
+<li>複数のパラメータやローカル変数を必要とする複雑なメソッドを表現する際には、メソッドをオブジェクトとして括りだすと良い</li>
+</ul>
+<h3 id="_19">方法<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h3>
+<ol>
+<li>オブジェクトを作り、メソッドと同じパラメータを保持させる</li>
+<li>ローカル変数はそのオブジェクトのインスタンス変数として表現する</li>
+<li>単一のメソッド run を定義し、その中身は元のメソッドと同一にする</li>
+<li>元のメソッドの中でオブジェクトをインスタンス化し、run メソッドを呼び出す</li>
+</ol>
+<h3 id="_20">理由<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h3>
+<ul>
+<li>メソッドオブジェクトは、特にシステムに新しいロジックを導入する準備段階で有用である</li>
+<li>メソッドオブジェクトは、メソッドの抽出に向かないコードをシンプルにすることにも役立つ<ul>
+<li>その部分に対してメソッドの抽出を行おうとすると、数多くの一時変数やパラメータを渡さなければならなくなる</li>
+</ul>
+</li>
+</ul>
+<h2 id="_21">パラメータの追加<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h2>
+<h3 id="_22">方法<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h3>
+<ol>
+<li>メソッドがインターフェースに定義されている場合は、インターフェースの方に先にパラメータを追加する</li>
+<li>パラメータを追加する</li>
+<li>コンパイルエラーを活用して、呼び出し側コードの修正点を調べる</li>
+</ol>
+<h3 id="_23">理由<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h3>
+<ul>
+<li>多くの場合、パラメータの追加は機能拡張の 1 ステップである<ul>
+<li>初期段階では不要だったが、新たな処理を行うためにパラメータが追加される</li>
+</ul>
+</li>
+<li>パラメータの追加は、データ構造の変更の 1 ステップとして登場することもある<ul>
+<li>まずは新しいパラメータを追加する</li>
+<li>その後古いパラメータを使っているところを消していき、最後に古いパラメータを消す</li>
+</ul>
+</li>
+</ul>
+<h2 id="_24">メソッドからコンストラクタへのパラメータの移動<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h2>
+<h3 id="_25">方法<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h3>
+<ol>
+<li>コンストラクタへパラメータを追加する</li>
+<li>そのパラメータと同名のインスタンス変数を定義する</li>
+<li>コンストラクタ内でインスタンス変数への代入を行う</li>
+<li>パラメータ parameter の参照を 1 つずつ this.parameter へ書き換えていく</li>
+<li>パラメータへの参照がなくなったら、メソッドからパラメータを削除し、呼び出し側からも削除する</li>
+<li>もうつける必要がなくなった「this.」を消していく</li>
+<li>インスタンス変数をふさわしい名前に変更する</li>
+</ol>
+<h3 id="_26">理由<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h3>
+<ul>
+<li>あるオブジェクトの複数のメソッドに対してパラメータを渡している場合は、予めパラメータを一度だけ渡しておくことで重複を排除することができる</li>
+<li>1 つのメソッドからしか使われていないインスタンス変数を見つけた場合には、このリファクタリングの逆を行えばよい</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="フッター" >
+      
+        
+        <a href="../030.design_patterns/" class="md-footer__link md-footer__link--prev" aria-label="前: 第30章 デザインパターン" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                前
+              </span>
+              第30章 デザインパターン
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../032.mastering_tdd/" class="md-footer__link md-footer__link--next" aria-label="次: 第32章 TDDを身につける" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                次
+              </span>
+              第32章 TDDを身につける
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2023 - Book Review Ltd. Allrights Reserved.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["tabs"], "search": "../../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e]+", "search.placeholder": "\u691c\u7d22", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+    
+  </body>
+</html>
