@@ -51,6 +51,7 @@ nav:
         - 第29章 xUnitのパターン: 010.tech/010.test_driven_development/030.patterns_for_test_driven_development/029.xunit_patterns/index.md
         - 第30章 デザインパターン: 010.tech/010.test_driven_development/030.patterns_for_test_driven_development/030.design_patterns/index.md
         - 第31章 リファクタリング: 010.tech/010.test_driven_development/030.patterns_for_test_driven_development/031.refactoring/index.md
+        - 第32章 TDDを身につける: 010.tech/010.test_driven_development/030.patterns_for_test_driven_development/032.mastering_tdd/index.md
 
   - ビジネス書: 
     - TOP: 020.business/index.md
