@@ -1186,14 +1186,14 @@
         <span style="color: #008000; font-weight: bold">return</span> Franc(<span style="color: #008000">self</span><span style="color: #666666">.</span>_amount <span style="color: #666666">*</span> multiplier, <span style="color: #008000; font-weight: bold">None</span>)
 </code></pre></div></td></tr></table></div>
 <ul>
-<li>現在の変更とは無関係だが、Franc の times メソッドが FactoryMethod を呼び出していることに気づく<ul>
+<li>現在の変更とは無関係だが、Franc の times メソッドが Factory Method を呼び出していないことに気づく<ul>
 <li>教科書的には「今行っている作業を止めないために、修正を待つべき」となる</li>
 <li>しかし、著者は、簡易的な修正割込みなら問題ないとしている</li>
 <li>ただし、割込みを更に割り込むことはしないようにしている</li>
 </ul>
 </li>
 <li>今回は、times メソッドの内部処理も修正しておく</li>
-<li>最後に、Factory メソッドに currency の知識を組み込み、コンストラクタのパラメータをインスタンス変数に代入するようにすれば、共通化ができる</li>
+<li>最後に、Factory Method に currency の知識を組み込み、コンストラクタのパラメータをインスタンス変数に代入するようにすれば、共通化ができる</li>
 </ul>
 <div class="highlight" style="background: #f8f8f8"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 1</span>
 <span style="color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px;"> 2</span>

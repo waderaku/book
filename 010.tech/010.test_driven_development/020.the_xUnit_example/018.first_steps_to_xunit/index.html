@@ -1084,7 +1084,7 @@ test<span style="color: #666666">.</span>testMethod()
         <span style="color: #008000">self</span><span style="color: #666666">.</span>was_run <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">None</span>
 
     <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_method</span>(<span style="color: #008000">self</span>):
-        <span style="color: #008000">self</span><span style="color: #666666">.</span>was_run <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+        <span style="color: #008000; font-weight: bold">pass</span>
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>テストメソッドが実行される前には None が出力され、実行後には 1 が出力されることを期待したが、実際には None が 2 度出力される</li>
