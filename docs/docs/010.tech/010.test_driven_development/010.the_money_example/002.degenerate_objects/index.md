@@ -27,15 +27,15 @@
 
 -   まずはテストコードのコンパイルが通るように修正を加える
 
-```python
-class Dollar:
-    def __init__(self, amount: int):
-        self.amount = amount
+    ```python
+    class Dollar:
+        def __init__(self, amount: int):
+            self.amount = amount
 
-    def times(self, multiplier: int) -> Dollar:
-        self.amount *= multiplier
-        return self
-```
+        def times(self, multiplier: int) -> Dollar:
+            self.amount *= multiplier
+            return self
+    ```
 
 -   この段階ではコンパイルは通るが、テストは失敗する
 -   テストの値が通るように、新たな Dollar オブジェクトを返却するように以下のように変更を加える
@@ -52,7 +52,8 @@ class Dollar:
 -   TDD には 3 つの実装方法がある。以下に、そのうちの 2 つを記す
 
     -   仮実装（第 1 章）: まずべた書きの値を使い、徐々に変数に置き換えていく
-    -   明白な実装(第 2 章): すぐに頭の中の実装をコードに落とす
+    -   明白な実装（第 2 章）: すぐに頭の中の実装をコードに落とす
+        -   本章では、第 1 章と比較して大きなステップで実装をした（べた書きでテストを通さなかった）
 
 -   筆者は普段 TDD を行うときには、上記 2 つの実装モードを揺れ動く
     -   実装方法が明らかな場合は、明白な実装を行う

@@ -38,7 +38,7 @@
                 self.was_run = None
 
             def test_method(self):
-                self.was_run = 1
+                pass
         ```
 
         -   テストメソッドが実行される前には None が出力され、実行後には 1 が出力されることを期待したが、実際には None が 2 度出力される

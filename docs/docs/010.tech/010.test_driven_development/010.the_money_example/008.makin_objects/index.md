@@ -24,7 +24,7 @@
 
     -   まず、Dollar、Franc の times メソッドの戻り値を Money に変更する
         -   Python においては特段意味のある変更ではない（type hinting の変更）が、本文では Java コードであるため記載
-    -   コンシューマが Dollar、Franc への依存箇所を減らしていくため、まずは Money に FactorMethod を用意する
+    -   コンシューマが Dollar、Franc への依存箇所を減らしていくため、まずは Money に Factory Method を用意する
 
     ```python
     def test_multiplication():
